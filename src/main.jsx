@@ -6,6 +6,7 @@ import "./index.css";
 import Dashboard from "./pages/Dashboard";
 import SingleProduct from "./pages/SingleProduct";
 import Layout from "./Layout/Layout";
+import LoginPage from "./pages/LoginPage";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/singleproduct/:id",
         element: <SingleProduct />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
       },
     ],
   },

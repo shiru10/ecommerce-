@@ -12,3 +12,8 @@ export const getSingleApiDatas = async (id)=>{
     const res = await api.get(`/products/${id}`)
     return res?.data;
 }
+
+export const userLogin = async(data)=>{
+    const res = await api.post("user/login", data)
+    return res?.data;
+}
