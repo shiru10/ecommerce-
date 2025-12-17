@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import SingleProduct from "./pages/SingleProduct";
 import Layout from "./Layout/Layout";
 import LoginPage from "./pages/LoginPage";
+import { AuthProvider } from "./Context/AuthContext";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -34,6 +35,8 @@ const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
   <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </QueryClientProvider>
 );

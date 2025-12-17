@@ -2,12 +2,14 @@ import LoginForm from "../Components/LoginForm";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../utils/schema";
-import { useMutation} from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { userLogin } from "../Api/api";
-import { data } from "react-router";
-import { useEffect, useState } from "react";
+import { AuthContext } from "../Context/AuthContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router";
 const LoginPage = () => {
-  const [apidatas, setApiDatas] = useState(null);
+  const navigate = useNavigate();
+  const { setUserData } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -15,33 +17,22 @@ const LoginPage = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-
   const { mutateAsync } = useMutation({
     mutationFn: userLogin,
   });
   const handleLoginSubmit = async (data) => {
     try {
       const res = await mutateAsync(data);
-      setApiDatas(res);
+      if (res) {
+        setUserData(res);
+        localStorage.setItem("userData", JSON.stringify(res));
+        navigate('/')
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(()=>{
-    if(apidatas){
-    localStorage.setItem("userData",JSON.stringify(apidatas))
-    }
-  },[apidatas])
-
-
-  useEffect(()=>{
-    const localData = JSON.parse(localStorage.getItem("userData"))
-    if(localData){
-      setApiDatas(localData);
-    }
-  },[])
   return (
     <div className="h-screen w-screen flex justify-center items-center">
       <LoginForm
