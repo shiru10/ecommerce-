@@ -8,6 +8,7 @@ import SingleProduct from "./pages/SingleProduct";
 import Layout from "./Layout/Layout";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./Context/AuthContext";
+import { CartProvider } from "./Context/CartContext";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -35,8 +36,12 @@ const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
   <QueryClientProvider client={queryClient}>
+    
     <AuthProvider>
+      <CartProvider>
       <RouterProvider router={router} />
+      </CartProvider>
     </AuthProvider>
+
   </QueryClientProvider>
 );

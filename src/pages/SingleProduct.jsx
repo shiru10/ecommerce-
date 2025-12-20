@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router"
 import { getSingleApiDatas } from "../Api/api";
-
+import { useContext } from "react";
+import { CartContext } from "../Context/CartContext";
 const SingleProduct = () => {
     const {id} = useParams();
+const {handleAddToCart} = useContext(CartContext);
     const {data,isLoading, isError, error} = useQuery({
         queryKey: ["singleitem"],
         queryFn: ()=>getSingleApiDatas(id),
     })
-    console.log(data);
   return (
     <div className="flex justify-center items-center">
         {isLoading && <p>....Loading</p>}
@@ -19,7 +20,7 @@ const SingleProduct = () => {
               <h3 className='text-lg font-medium text-left'>Rating: {data?.rating}</h3>
               <h3 className='text-lg font-medium text-left'>$ {data?.price}</h3>
               <p className='text-lg font-regular text-left'>{data?.description}</p>
-              <button className='bg-emerald-400 px-4 py-2 rounded-2xl cursor-pointer max-w-50'>Add To Cart</button>
+              <button className='bg-emerald-400 px-4 py-2 rounded-2xl cursor-pointer max-w-50' onClick={()=>handleAddToCart(data)}>Add To Cart</button>
             </div>
     </div>
   )
