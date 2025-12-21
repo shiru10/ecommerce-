@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 export const CartContext = createContext();
 
@@ -36,9 +36,26 @@ export const CartProvider = ({ children }) => {
     }
   }
 
-console.log(cart);
+  const removeCartItem = (cartItem)=>{
+    const newArray = cart.filter((item)=>item.id!==cartItem)
+    setCart(newArray);
+  }
+
+useEffect(()=>{
+  if(cart){
+  localStorage.setItem("CartItems", JSON.stringify(cart)) 
+  }
+},[cart])
+
+useEffect(()=>{
+  const localData = JSON.parse(localStorage.getItem("CartItems"));
+  if(localData){
+    setCart(localData);
+  }
+  
+},[])
   return (
-    <CartContext.Provider value={{ cart, setCart, handleAddToCart, CartItemIncrement, CartItemDecrement }}>
+    <CartContext.Provider value={{ cart, setCart, handleAddToCart, CartItemIncrement, CartItemDecrement, removeCartItem }}>
       {children}
     </CartContext.Provider>
   );

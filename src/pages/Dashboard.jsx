@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import { CartContext } from '../Context/CartContext';
-import AddToCart from '../Components/AddToCart';
+
 const Dashboard = () => {
   const navigate = useNavigate()
     const {data, isLoading, isError, error} = useQuery({
@@ -33,7 +33,7 @@ const Dashboard = () => {
           ))}
         </div>
 
-        <AddToCart />
+        
 
 
 

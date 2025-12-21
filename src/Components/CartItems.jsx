@@ -1,10 +1,11 @@
 import { useContext } from "react";
+import { RxCross1 } from "react-icons/rx";
 import { CartContext } from "../Context/CartContext";
-const AddToCart = () => {
-  const { cart, CartItemIncrement, CartItemDecrement } =
+const CartItems = () => {
+  const { cart, CartItemIncrement, CartItemDecrement, removeCartItem } =
     useContext(CartContext);
   return (
-    <div className="p-3 flex flex-col gap-2">
+    <div className="p-3 flex flex-col gap-3">
       {cart.map((item) => (
         <div key={item.id} className="flex gap-2.5 justify-center items-center">
           <img src={item.images} alt={item.images} className="h-15 w-15" />
@@ -29,15 +30,16 @@ const AddToCart = () => {
           </div>
           <div>
             <h3 className="font-semibold text-lg">
-              $ {item.quantity * item.price}
+              $ {parseFloat(item.quantity * item.price).toFixed()}
             </h3>
           </div>
           </div>
         </div>
+        <RxCross1 onClick={()=>removeCartItem(item.id)} className="cursor-pointer"/>
         </div>
       ))}
     </div>
   );
 };
 
-export default AddToCart;
+export default CartItems;
